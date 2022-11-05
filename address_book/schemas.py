@@ -2,11 +2,33 @@ from typing import List
 from pydantic import BaseModel
 
 
-class Person(BaseModel):
+# region Person
+
+
+class PersonBase(BaseModel):
+    email: str
     first_name: str
     last_name: str
     salutation: str
     is_adult: bool = False
+
+
+# Properties shared by models stored in DB
+class PersonInDBBase(PersonBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+# Properties to return to client
+class Person(PersonInDBBase):
+    pass
+
+
+# endregion
+
+# retion Address
 
 
 class AddressBase(BaseModel):
@@ -20,7 +42,7 @@ class AddressBase(BaseModel):
 # Properties shared by models stored in DB
 class AddressInDBBase(AddressBase):
     id: int
-    # residents: List[Person] = []
+    residents: List[PersonBase] = []
 
     class Config:
         orm_mode = True
@@ -32,9 +54,11 @@ class Address(AddressInDBBase):
 
 
 # Properties stored in DB
-class AddressInDB(AddressInDBBase):
-    pass
+# class AddressInDB(AddressInDBBase):
+#     pass
 
 
-class AddressEntryCreate(AddressInDBBase):
-    pass
+# class AddressEntryCreate(AddressInDBBase):
+#     pass
+
+# endregion

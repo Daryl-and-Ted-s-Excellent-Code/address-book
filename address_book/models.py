@@ -7,12 +7,13 @@ from .database import Base
 class Person(Base):
     __tablename__ = "person"
     id = Column(Integer, primary_key=True)
+    email = Column(String, index=True, unique=True)
     first_name = Column(String)
     last_name = Column(String)
     salutation = Column(String)
     is_adult = Column(Boolean, default=False)
     address_id = Column(Integer, ForeignKey("addressentry.id"))
-    #address = relationship("AddressEntry", back_populates="people")
+    address = relationship("AddressEntry", back_populates="residents")
 
 
 class AddressEntry(Base):
@@ -23,7 +24,7 @@ class AddressEntry(Base):
     state = Column(String)
     zip_code = Column(String)
     country = Column(String)
-    # residents = relationship(
-    #     "Person",
-    #     back_populates="address",
-    # )
+    residents = relationship(
+        "Person",
+        back_populates="address",
+    )

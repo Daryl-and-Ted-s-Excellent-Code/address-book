@@ -42,7 +42,7 @@ class AddressBase(BaseModel):
 # Properties shared by models stored in DB
 class AddressInDBBase(AddressBase):
     id: int
-    residents: List[PersonBase] = []
+    residents: List[Person] = []
 
     class Config:
         orm_mode = True
@@ -58,7 +58,7 @@ class Address(AddressInDBBase):
 #     pass
 
 
-# class AddressEntryCreate(AddressInDBBase):
-#     pass
+class AddressEntryCreate(AddressInDBBase):
+    pass
 
 # endregion
